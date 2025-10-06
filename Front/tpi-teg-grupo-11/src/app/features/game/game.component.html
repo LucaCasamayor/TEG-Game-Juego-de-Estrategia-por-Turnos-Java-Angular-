@@ -1,0 +1,113 @@
+@if(!loading && !error) {
+  <div class="game-container">
+    <!-- Panel de Información Lateral -->
+    <div class="info-panel" style="background-image: url('/assets/images/game/elements/register.png')">
+      <div class="info-header">
+        <h3>Info</h3>
+        <button class="back-btn" (click)="onBackToMenu()" title="Volver al menú">
+          <svg  xmlns="http://www.w3.org/2000/svg"  width="24"  height="24"  viewBox="0 0 24 24"  fill="none"  stroke="currentColor"  stroke-width="2"  stroke-linecap="round"  stroke-linejoin="round"  class="icon icon-tabler icons-tabler-outline icon-tabler-home"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M5 12l-2 0l9 -9l9 9l-2 0" /><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7" /><path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2v6" /></svg>
+        </button>
+      </div>
+
+      @if(game) {
+        <div class="game-info">
+          <div class="info-section bg-cover py-[0.5rem] px-[2rem]" style="background-image: url('/assets/images/game/elements/register.png')">
+            <h4 class="text-amber-950">Fase</h4>
+            <p class="text-amber-950">{{game.currentTurn.turnPhase}}</p>
+          </div>
+
+          <div class="info-section bg-cover py-[1rem] px-[1.8rem]" style="background-image: url('/assets/images/game/elements/register.png')">
+            <h4 class="text-amber-950">Objetivos</h4>
+            <p class="text-amber-950">Tipo de Objetivo: <span class="text-neutral-950">{{ getPlayerTurn()?.objective?.objectiveType?.name || '---' }}</span></p>
+            <p class="text-neutral-950">{{ getPlayerTurn()?.objective?.description || 'Sin objetivo asignado' }}</p>
+          </div>
+
+          <app-movs-historial [gameId]="gameId"
+
+                              [currentTurnNumber]="game ? game.currentTurnIndex + 1 : 1"
+          ></app-movs-historial>
+
+          <div class="game-actions">
+            <button class="action-btn primary" (click)="onGameAction(TurnPhase.DONE)">
+              Terminar fase
+            </button>
+            <!--
+            <button class="action-btn primary" (click)="onGameAction('claim-card')">
+              Reclamar Carta
+            </button>
+            -->
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Contenedor Principal -->
+    <div class="main-content">
+      <!-- Área del Mapa -->
+      <div class="map-container">
+        <div class="map-area">
+          <!-- Aquí iría el componente del mapa -->
+          @if(loading) {
+            <div class="map-placeholder">
+              <i class="fas fa-map fa-3x"></i>
+              <p>Mapa del juego se cargará aquí</p>
+              <small>Game ID: {{ gameId }}</small>
+            </div>
+          } @else {
+            <div class="map-with-frame">
+                <app-test-map [gameData]="game"
+                              [svgPath]="shouldLoadSvg ? svgPath : null"
+                              [turn]="game?.currentTurn"
+                              (clickedTerritory)="onClickTerritory($event)">
+                </app-test-map>
+                <div class="map-frame"></div>
+            </div>
+          }
+        </div>
+      </div>
+
+
+      <div class="hover-trigger"></div>
+      <div class="players-panel">
+        <app-game-players-bar [players]="game!.players" [currentPlayer]="getPlayerTurn()"></app-game-players-bar>
+      </div>
+      <!-- Panel de Jugadores con hover
+      <div class="players-panel">
+        <div class="players-header">
+          <h3>Jugadores</h3>
+          <span class="players-count">{{ game?.players?.length || 0 }} jugadores</span>
+        </div>
+        <div class="players-list">
+          <app-game-players-bar [players]="game!.players"></app-game-players-bar>
+        </div>
+      </div>-->
+    </div>
+  </div>
+}
+
+<!-- Loading State -->
+@if(loading) {
+  <div class="loading-container">
+    <div class="loading-spinner">
+      <i class="fas fa-spinner fa-spin fa-2x"></i>
+      <p>Cargando partida...</p>
+    </div>
+  </div>
+}
+
+<!-- Error State -->
+@if(error) {
+  <div class="error-container">
+    <div class="error-message">
+      <i class="fas fa-exclamation-triangle fa-2x"></i>
+      <h3>Error</h3>
+      <p>{{ error }}</p>
+      <button class="retry-btn" (click)="loadGame(gameId)">
+        <i class="fas fa-redo"></i> Reintentar
+      </button>
+      <button class="back-btn" (click)="onBackToMenu()">
+        <i class="fas fa-arrow-left"></i> Volver al menú
+      </button>
+    </div>
+  </div>
+}

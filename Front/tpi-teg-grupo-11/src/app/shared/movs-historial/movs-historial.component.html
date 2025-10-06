@@ -1,0 +1,18 @@
+<div class="info-section historial overflow-y-scroll max-h-[450px]">
+    <h4 class="text-amber-950">Historial de Movimientos</h4>
+    <ul>
+
+       @if (movementDisplays.length == 0) {
+            <li>
+                <p><strong>Aún no hay movimientos.</strong></p>
+            </li>
+        }
+        @else {
+            @for (movement of movementDisplays; track trackByMovementId($index, movement)) {
+                <li>
+                    <p class="mb-4 text-sm font-normal whitespace-pre-line">{{ formatMovement(movement) }}</p>
+                </li>
+            }
+        }
+    </ul>
+</div>

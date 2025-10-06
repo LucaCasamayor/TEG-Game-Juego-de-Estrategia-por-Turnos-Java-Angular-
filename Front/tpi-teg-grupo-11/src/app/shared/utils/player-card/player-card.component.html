@@ -1,0 +1,39 @@
+<div
+  [ngClass]="player.turnOrder === 0 ? 'shadow-3xl shadow-green-500 animate-pulse' : ''"
+  class="flex items-center p-4 border  border-gray-700 rounded-md shadow-md space-x-4 bg-gray-800 transition-all duration-300"
+>
+  <!-- Avatar + color -->
+  <div class="relative">
+    <img
+      [src]="player.user?.imgUrl"
+      [alt]="player.user?.username || ('Bot ' + player.playerId)"
+      class="w-16 h-16 rounded-full object-cover border-2"
+    />
+
+    <div
+      class="absolute bottom-0 right-0 w-4 h-4 rounded-full border border-white"
+      [ngClass]="getColorClass()"
+    ></div>
+  </div>
+
+  <!-- Info del jugador -->
+  <div class="flex-1">
+    @if (player.playerType === PlayerType.PLAYER) {
+      <h3 class="text-lg font-semibold text-white">{{ player.user?.username }}</h3>
+    } @else {
+      <h3 class="text-lg font-semibold text-white">Bot {{ player.playerId }}</h3>
+    }
+
+    <div class="flex items-center text-sm text-gray-400">
+      <span class="mr-1">🏰</span>
+      <span class="text-white">{{ player.territories?.length || 0 }}</span>
+    </div>
+  </div>
+
+  <!-- Indicador de turno -->
+  @if (player.turnOrder === 0) {
+    <div class="text-green-400 text-xl">
+      ▶
+    </div>
+  }
+</div>

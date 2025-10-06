@@ -1,0 +1,31 @@
+<div class="game-players-bar">
+  <div class="game-status">
+    <div class="status-item">
+      <span class="status-label">Jugadores activos:</span>
+      <span class="status-value">{{ getActivePlayers() }}</span>
+    </div>
+
+    @if (getEliminatedPlayers() > 0){
+    <div class="status-item">
+      <span class="status-label">Eliminados:</span>
+      <span class="status-value eliminated">{{ getEliminatedPlayers() }}</span>
+    </div>
+    }
+    <div class="current-turn-info">
+      <span class="turn-label">Turno de:</span>
+      @if(currentPlayer && currentPlayer!.playerType === "BOT") {
+        <span class="current-player-name">Bot {{ getCurrentPlayer()?.playerId }}</span>
+      } @else if(currentPlayer){
+        <span class="current-player-name">{{ getCurrentPlayer()?.user?.username }}</span>
+      } @else {
+        <span class="current-player-name">undefined</span>
+      }
+    </div>
+  </div>
+  <div class="flex gap-5 my-5">
+    @for (player of sortedPlayers; track player.playerId) {
+      <app-player-card [player] = "player">
+      </app-player-card>
+    }
+  </div>
+</div>

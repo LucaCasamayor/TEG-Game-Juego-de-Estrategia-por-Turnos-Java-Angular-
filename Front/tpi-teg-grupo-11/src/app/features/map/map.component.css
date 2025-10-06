@@ -1,0 +1,275 @@
+.map-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: none;
+  overflow: hidden;
+  font-family: "Arial", sans-serif;
+}
+
+.map-wrapper.loading {
+  pointer-events: none;
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  color: white;
+}
+
+.loading-spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+.loading-overlay p {
+  font-size: 18px;
+  margin: 0;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.svg-container {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.svg-container svg {
+  margin: 0;
+  object-fit: contain;
+  background: white;
+}
+
+.svg-container svg path {
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  stroke: #2563eb;
+  stroke-width: 1;
+}
+
+.svg-container svg path:hover {
+  opacity: 0.8;
+  stroke-width: 2;
+  filter: brightness(1.1) drop-shadow(0 0 5px rgba(37, 99, 235, 0.5));
+  transform: scale(1.02);
+  transform-origin: center;
+}
+
+.svg-container svg path.selected {
+  stroke: #dc2626;
+  stroke-width: 3;
+  filter: brightness(1.2) drop-shadow(0 0 10px rgba(220, 38, 38, 0.7));
+}
+
+.svg-container svg path.highlighted {
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.05);
+  }
+}
+
+.country-info-panel {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  min-width: 280px;
+  max-width: 350px;
+  z-index: 100;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.country-info h3 {
+  margin: 0 0 15px 0;
+  color: #1f2937;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.country-details {
+  margin-bottom: 20px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  padding: 5px 0;
+}
+
+.detail-item .label {
+  font-weight: 600;
+  color: #6b7280;
+  font-size: 14px;
+}
+
+.detail-item .value {
+  font-weight: 500;
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.detail-item .value.troops-count {
+  background: #fef3c7;
+  color: #92400e;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-weight: bold;
+}
+
+.detail-item .value.player-name {
+  background: #dbeafe;
+  color: #1e40af;
+  padding: 2px 8px;
+  border-radius: 12px;
+}
+
+.detail-item .value.country-id {
+  font-family: monospace;
+  background: #f3f4f6;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.country-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.action-btn {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 14px;
+}
+
+.action-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.action-btn.attack-btn {
+  background: #fee2e2;
+  color: #dc2626;
+}
+
+.action-btn.attack-btn:hover {
+  background: #fecaca;
+}
+
+.action-btn.fortify-btn {
+  background: #ecfdf5;
+  color: #059669;
+}
+
+.action-btn.fortify-btn:hover {
+  background: #d1fae5;
+}
+
+.action-btn.move-btn {
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.action-btn.move-btn:hover {
+  background: #dbeafe;
+}
+
+
+.continent-legend {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  padding: 15px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  z-index: 100;
+}
+
+.continent-legend h4 {
+  margin: 0 0 10px 0;
+  color: #1f2937;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.legend-items {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.color-box {
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.continent-name {
+  font-weight: 600;
+  color: #1f2937;
+  min-width: 80px;
+}
+
+.country-count {
+  color: #6b7280;
+  font-size: 11px;
+}
+

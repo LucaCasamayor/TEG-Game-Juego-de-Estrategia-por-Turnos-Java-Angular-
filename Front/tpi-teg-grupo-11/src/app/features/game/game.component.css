@@ -1,0 +1,387 @@
+.game-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  color: #ffffff;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Panel de Información Lateral */
+.info-panel {
+  width: 280px;
+  display: flex;
+  flex-direction: column;
+  background-position: center;
+  backdrop-filter: blur(20px);
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.info-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  max-height: 60px;
+}
+
+.info-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.back-btn {
+  background: royalblue;
+  border: none;
+  color: white;
+  padding: 0.5rem;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn:hover {
+  background: royalblue;
+  transform: scale(1.05);
+}
+
+.game-info {
+  flex: 1;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+.info-section {
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  background-position: center 50%;
+}
+
+.historial {
+  height: 70%;
+  margin-bottom: 0;
+}
+
+.info-section h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.info-section p {
+  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.info-section strong {
+  color: #a0aec0;
+}
+
+/* Acciones del Juego */
+.game-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+/* Contenido Principal */
+.main-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  position: relative;
+}
+
+/* Contenedor principal del mapa */
+.map-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(145deg, #2d3748 0%, #1a202c 100%);
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* El área donde se mostrará el mapa */
+.map-area {
+  flex: 1;
+  position: relative;
+  background: radial-gradient(circle at center, #2d3748 0%, #1a202c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+/* El contenedor con el marco superpuesto */
+.map-with-frame {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+/* Marco superpuesto al mapa */
+/*.map-frame {*/
+/*  display: none;*/
+/*  top: 0;*/
+/*  left: 0;*/
+/*  right: 0;*/
+/*  bottom: 0;*/
+/*  background-image: url('/assets/images/game/frame.png');*/
+/*  background-size: contain;*/
+/*  background-repeat: no-repeat;*/
+/*  pointer-events: none; !* Evita que el marco interfiera con las interacciones del mapa *!*/
+/*  z-index: 2;*/
+/*   width: auto;*/
+/*  height: 91vh;*/
+/*}*/
+
+/* Estilo para el componente del mapa */
+app-test-map {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+}
+
+.map-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-bottom: 1px solid #4a5568;
+}
+
+.map-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.map-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.control-btn {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+.map-area {
+  flex: 1;
+  position: relative;
+  background: radial-gradient(circle at center, #2d3748 0%, #1a202c 100%);
+  align-items: center;
+  justify-content: center;
+}
+
+.map-placeholder {
+  text-align: center;
+  color: #a0aec0;
+}
+
+.map-placeholder i {
+  margin-bottom: 1rem;
+  opacity: 0.6;
+}
+
+.map-placeholder p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.map-placeholder small {
+  font-size: 0.8rem;
+  opacity: 0.7;
+}
+
+/* Zona de activación para el hover */
+.hover-trigger {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  z-index: 10;
+}
+
+/* Panel de Jugadores - Modificado para hover */
+.players-panel {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: auto;
+  background: linear-gradient(180deg, #1a202c 0%, #2d3748 100%);
+  display: flex;
+  flex-direction: column;
+  transform: translateY(150px); /* Oculto por defecto, solo muestra 50px */
+  transition: transform 0.3s ease-in-out;
+  z-index: 20;
+  box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Cuando se hace hover en la zona de activación o en el panel mismo */
+.players-panel:hover {
+  transform: translateY(0);
+}
+
+.players-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid #4a5568;
+  min-height: 50px; /* Esta parte siempre será visible */
+}
+
+.players-header h3 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.players-count {
+  font-size: 0.9rem;
+  color: #a0aec0;
+}
+
+.players-list {
+  flex: 1;
+  display: flex;
+  gap: 1rem;
+  padding: 1rem 1.5rem;
+  overflow-x: auto;
+}
+
+.player-card {
+  min-width: 200px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  padding: 1rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.player-card.active {
+  border-color: #63b3ed;
+  background: rgba(99, 179, 237, 0.1);
+}
+
+.player-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  flex-shrink: 0;
+}
+
+.player-avatar.red { background: #e53e3e; }
+.player-avatar.blue { background: #3182ce; }
+.player-avatar.green { background: #38a169; }
+
+.player-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.player-name {
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.player-territories, .player-troops {
+  font-size: 0.8rem;
+  color: #a0aec0;
+}
+
+.player-status {
+  display: flex;
+  align-items: center;
+  color: #ffd700;
+}
+
+/* Estados de Loading y Error */
+.loading-container, .error-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  background: #1a1a1a;
+  color: white;
+}
+
+.loading-spinner, .error-message {
+  text-align: center;
+  padding: 2rem;
+}
+
+.loading-spinner i {
+  color: #63b3ed;
+  margin-bottom: 1rem;
+}
+
+.error-message i {
+  color: #e53e3e;
+  margin-bottom: 1rem;
+}
+
+.error-message h3 {
+  margin: 1rem 0;
+  color: #e53e3e;
+}
+
+.retry-btn {
+  background: #3182ce;
+  border: none;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  margin: 0.5rem;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.retry-btn:hover {
+  background: #2c5282;
+  transform: translateY(-1px);
+}

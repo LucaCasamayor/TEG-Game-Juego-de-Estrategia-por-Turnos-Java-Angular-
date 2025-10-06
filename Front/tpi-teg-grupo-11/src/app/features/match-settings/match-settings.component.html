@@ -1,0 +1,107 @@
+<main appSession (sessionFound)="handleUser($event)" class="w-full h-full grid place-content-center align-middle">
+  <div class="w-1/1 my-10 mx-auto px-20 py-20 bg-cover"
+       style="background-image: url('/assets/images/game/elements/register.png')"
+  >
+    <!-- Header -->
+    <div class="text-center mb-2">
+      <h1 class="text-3xl font-bold ">Configuración de partida</h1>
+    </div>
+
+    <!-- Main Content Grid -->
+    <form #settingsForm="ngForm" (ngSubmit)="onSubmit(settingsForm)" class="flex flex-col gap-10 justify-center mt-10">
+      <div class="grid grid-cols-2 gap-5 mb-2 w-full">
+        <!-- Left Column - Configuration Options -->
+        <div class="space-y-2 grid grid-rows-6 gap-5">
+          <h1 class="text-2xl w-full m-auto text-center">
+            Mapa
+          </h1>
+          <h1 class="text-2xl w-full m-auto text-center">
+            Tiempo por turno
+          </h1>
+          <h1 class="text-2xl w-full m-auto text-center">
+            Perfil de IA
+          </h1>
+          <h1 class="text-2xl w-full m-auto text-center">
+            Tipos de Objetivos
+          </h1>
+          <h1 class="text-2xl w-full m-auto text-center">
+            Sala
+          </h1>
+          <h1 class="text-2xl w-full m-auto text-center">
+            Contraseña de la sala
+          </h1>
+        </div>
+
+        <!-- Right Column - Selectors -->
+        <div class="space-y-2 grid grid-rows-6 gap-5">
+          <div class="map my-auto">
+            @if (this.maps.length > 0) {
+              <select class="bg-white w-full py-3 px-2 text-lg rounded-md" name="map" #map="ngModel" [(ngModel)]="settings.map" required>
+                @for (map of maps; track map.id) {
+                  <option [ngValue]="map">{{ map.name }}</option>
+                }
+              </select>
+            }
+          </div>
+
+          <div class="turnTime my-auto">
+            <select name="turnTime" #turnTime="ngModel" [(ngModel)]="settings.turnTime" class="bg-white w-full py-3 px-2 text-lg rounded-md">
+              <option value="30">30 seg.</option>
+              <option value="60">60 seg.</option>
+              <option value="120">120 seg.</option>
+            </select>
+          </div>
+
+          <div class="aiProfile my-auto">
+            <select
+              class="bg-white w-full py-3 px-2 text-lg rounded-md"
+              name="aiProfile"
+              [(ngModel)]="settings.aiProfile"
+              required
+            >
+              <option *ngFor="let profile of aiProfiles" [value]="profile.valor">
+                {{ profile.nombre }}
+              </option>
+            </select>
+          </div>
+
+          <div class="objTypes my-auto">
+            <select class="bg-white w-full py-3 px-2 text-lg rounded-md" name="objectiveType" #objectiveType="ngModel" [(ngModel)]="selectedObjective" required>
+              <option *ngFor="let obj of objectiveTypes"
+                      [ngValue]="obj"
+                      [disabled]="obj.name === 'General'">
+                {{ obj.name }}
+            </select>
+          </div>
+
+          <div class="roomType radio-inputs flex flex-row align-middle gap-5 justify-center my-auto">
+            <label class="radio">
+              <input type="radio" name="radio" (ngModelChange)="changePrivacyParty(false)" [(ngModel)]="settings.isPrivate" [value]="false">
+              <span class="name">Pública</span>
+            </label>
+
+            <label class="radio">
+              <input type="radio" name="radio" (ngModelChange)="changePrivacyParty(true)" [(ngModel)]="settings.isPrivate" [value]="true">
+              <span class="name">Privada</span>
+            </label>
+          </div>
+
+          @if(settings.isPrivate) {
+            <div class="flex justify-center align-middle my-auto">
+              <h1 class="text-3xl">{{settings.password}}</h1>
+            </div>
+          } @else {
+            <div class="flex justify-center align-middle my-auto">
+              <h1 class="text-3xl"></h1>
+            </div>
+          }
+        </div>
+      </div>
+      <div class="flex justify-center">
+        <button type="submit" class="text-2xl">
+          Iniciar Sala
+        </button>
+      </div>
+    </form>
+  </div>
+</main>

@@ -1,0 +1,35 @@
+<main class="w-full h-[100vh] relative">
+  <app-about-us [isModalOpen]="isModalOpen" (closeModal)="toggleModal()"></app-about-us>
+  <div class="relative h-full place-content-center flex flex-col gap-5">
+    <div class="relative z-2 mx-auto flex flex-col gap-5">
+      <h1 class="py-8 px-10 text-7xl m-auto shadow-xl" style="background-image: url('/assets/images/game/elements/login.png')">T.E.G</h1>
+      <div class="flex flex-col gap-2">
+        @if (session) {
+          <button routerLink="/match-settings" class="text-3xl">Create New Game</button>
+        }
+        <button routerLink="/join-game"  class="text-3xl">Join Game</button>
+        <button (click)="openPdf()" class="text-3xl">How to play</button>
+        <button routerLink="/faqs" class="text-3xl">FAQ</button>
+      </div>
+    </div>
+    <div class="absolute z-1 w-full h-full">
+      <div class="absolute right-5 top-5 flex gap-5">
+        @if (session) {
+          <button routerLink="/profile" class="text-3xl">Profile</button>
+          <button (click)="logOut()" class="text-3xl">Log Out</button>
+        } @else {
+          <button routerLink="/login" class="text-3xl">Iniciar Sesión</button>
+        }
+      </div>
+      <button (click)="toggleModal()" class="absolute left-5 bottom-5 text-3xl">About us</button>
+      <audio #audioRef loop class="hidden">
+        <source src="assets/music/sound.mpeg" type="audio/mpeg" />
+        Your browser does not support the audio element.
+      </audio>
+      <button (click)="togglePlayPause()" class="absolute bottom-5 right-5">
+        <mat-icon *ngIf="isPlaying">pause</mat-icon>
+        <mat-icon *ngIf="!isPlaying">play_arrow</mat-icon>
+      </button>
+    </div>
+  </div>
+</main>

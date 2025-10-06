@@ -1,0 +1,18 @@
+.info-section {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: #d6640f;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.historial {
+  height: 70%;
+  margin-bottom: 0;
+}
+
+.info-section h4 {
+  margin: 0 0 0.75rem 0;
+  font-size: 1rem;
+  font-weight: 600;
+}

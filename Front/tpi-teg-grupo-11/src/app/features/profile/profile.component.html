@@ -1,0 +1,110 @@
+<main class="w-screen h-screen grid place-content-center">
+  <a routerLink="/" class="absolute top-5 left-5">
+    <button>Volver</button>
+  </a>
+
+  <div class="p-10 flex justify-center items-center flex-col gap-5 bg-cover w-[500px] rounded-lg shadow-lg"
+       style="background-image: url('/assets/images/game/elements/register.png')">
+
+    <!-- Imagen con opción de cambio -->
+    <div class="relative">
+      <img
+        [src]="editedUser.imgUrl || user.imgUrl"
+        [width]="200" [height]="200"
+        class="rounded-full object-cover border"
+        alt="Foto de perfil"
+      />
+      <button
+        *ngIf="isEditing"
+        (click)="changePhoto()"
+        class="absolute top-[155px] left-[115px] bg-blue-600 text-white rounded-full px-4 py-2 text-sm"
+      >
+        ✎
+      </button>
+    </div>
+
+    <!-- Nombre -->
+    <h2 class="text-white text-2xl">Bienvenido,</h2>
+    <div class="text-white text-4xl font-bold text-center w-full">
+      <ng-container *ngIf="!isEditing">{{ user.username }}</ng-container>
+      <!-- Cambiar nombre -->
+      <input
+        *ngIf="isEditing"
+        type="text"
+        [(ngModel)]="editedUser.username"
+        class="w-full p-2 rounded bg-white bg-opacity-80 border border-gray-300 text-black placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+        placeholder="Nuevo nombre"
+      />
+
+      <input
+        *ngIf="isEditing"
+        type="password"
+        [(ngModel)]="currentPassword"
+        class="w-full p-2 rounded bg-white bg-opacity-80 border border-gray-300 text-black placeholder-gray-500 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+        placeholder="Contraseña actual"
+      />
+
+      <input
+        *ngIf="isEditing"
+        type="password"
+        [(ngModel)]="editedUser.password"
+        class="w-full p-2 rounded bg-white bg-opacity-80 border border-gray-300 text-black placeholder-gray-500 mt-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+        placeholder="Nueva contraseña"
+      />
+
+      <!-- Mensaje de error -->
+      <p *ngIf="passwordError" class="text-red-500 mt-1 text-sm">
+        La contraseña actual es incorrecta.
+      </p>
+    </div>
+
+    <!-- Botones -->
+    <div class="flex gap-4 mt-4 w-full justify-center">
+      <button
+        *ngIf="!isEditing"
+        (click)="toggleEdit()"
+        class="bg-blue-600 text-white px-4 py-2 rounded"
+      >Editar perfil ✎</button>
+
+      <ng-container *ngIf="isEditing">
+        <button (click)="saveChanges()" class="bg-green-600 text-white px-4 py-2 rounded">Guardar</button>
+        <button (click)="cancelEdit()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancelar</button>
+      </ng-container>
+    </div>
+  </div>
+
+  <!-- Modal de selección de imagen -->
+  <div
+    *ngIf="isImageModalOpen"
+    class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+  >
+    <div
+      class="bg-cover p-6 rounded-lg shadow-lg w-full max-w-[600px] max-h-[90vh] flex flex-col items-center overflow-hidden"
+      style="background-image: url('/assets/images/game/elements/register.png')"
+    >
+      <h3 class="text-white text-2xl font-bold mb-4">Seleccioná tu nueva foto de perfil</h3>
+      <div
+        class="grid grid-cols-3 gap-4 overflow-auto max-h-[65vh] w-full px-2"
+        style="scrollbar-width: none; -ms-overflow-style: none;"
+      >
+        <img
+          *ngFor="let img of availableImages"
+          [src]="img"
+          (click)="selectImage(img)"
+          class="cursor-pointer hover:scale-105 transition-all rounded-lg border"
+          [width]="100" [height]="100"
+          alt="Imagen de perfil"
+        />
+      </div>
+      <div class="mt-6">
+        <button (click)="isImageModalOpen = false" class="bg-gray-600 text-white px-4 py-2 rounded">Cerrar</button>
+      </div>
+    </div>
+  </div>
+  <div
+    *ngIf="showSuccessMessage"
+    class="fixed top-10 left-1/2 transform -translate-x-1/2 bg-green-600 text-white px-6 py-3 rounded shadow-lg z-50 transition-opacity duration-500"
+  >
+    Perfil actualizado ✔️
+  </div>
+</main>

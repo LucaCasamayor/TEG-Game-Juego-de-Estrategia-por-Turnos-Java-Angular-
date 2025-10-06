@@ -1,0 +1,20 @@
+<h2 mat-dialog-title>Fortificar</h2>
+<mat-dialog-content>
+  <p>¿Con cuantas tropas quieres pasar? (máximo: {{ data.maxTroops }})</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Cantidad de tropas</mat-label>
+    <input
+      matInput
+      type="number"
+      [(ngModel)]="troopsToFortify"
+      [min]="2"
+      [max]="data.maxTroops"
+    />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" [disabled]="troopsToFortify < 1 || troopsToFortify > data.maxTroops" (click)="confirm()">
+    Confirmar
+  </button>
+</mat-dialog-actions>

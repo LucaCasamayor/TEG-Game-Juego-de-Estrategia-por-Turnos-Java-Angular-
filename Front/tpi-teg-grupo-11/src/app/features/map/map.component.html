@@ -1,0 +1,52 @@
+<div class="map-wrapper" [class.loading]="isLoading">
+  @if (isLoading) {
+    <div class="loading-overlay">
+      <div class="loading-spinner"></div>
+      <p>Cargando mapa...</p>
+    </div>
+  }
+
+  <div #svgContainer class="svg-container" [innerHTML]="svgContent"></div>
+
+  @if (showCountryInfo && (selectedCountry || hoveredCountry)) {
+    <div class="country-info-panel">
+      <div class="country-info">
+        <h3>{{ (selectedCountry || hoveredCountry)?.name }}</h3>
+
+        <div class="country-details">
+          <div class="detail-item">
+            <span class="label">Continente:</span>
+            <span class="value">
+              {{ getContinentName((selectedCountry || hoveredCountry)?.continent) }}
+            </span>
+          </div>
+
+          @if ((selectedCountry || hoveredCountry)?.troops) {
+            <div class="detail-item">
+              <span class="label">Tropas:</span>
+              <span class="value troops-count">
+                {{ (selectedCountry || hoveredCountry)?.troops }}
+              </span>
+            </div>
+          }
+
+          @if ((selectedCountry || hoveredCountry)?.playerName) {
+            <div class="detail-item">
+              <span class="label">Jugador:</span>
+              <span class="value player-name">
+                {{ (selectedCountry || hoveredCountry)?.playerName }}
+              </span>
+            </div>
+          }
+
+          <div class="detail-item">
+            <span class="label">ID:</span>
+            <span class="value country-id">
+              {{ (selectedCountry || hoveredCountry)?.id }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

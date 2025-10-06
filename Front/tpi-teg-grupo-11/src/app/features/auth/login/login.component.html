@@ -1,0 +1,99 @@
+<main class="flex items-center justify-center min-h-screen">
+  <button routerLink="/home" class="absolute left-5 top-5">Volver</button>
+
+  <div class="background-container bg-cover bg-center p-15 rounded-2xl w-full max-w-sm"
+       style="background-image: url('/assets/images/game/elements/register.png')">
+
+    <h2 class="text-3xl font-bold text-center mb-6">Iniciar sesión</h2>
+
+    <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" class="flex flex-col gap-2 justify-center">
+
+      <div>
+        <!-- Campo usuario -->
+        <div class="mb-4 w-full">
+          <label class="block text-lg font-medium mb-1">Usuario</label>
+
+          <div class="flex items-center gap-2" style="max-width: 344px;">
+            <input
+              name="username"
+              [(ngModel)]="data.username"
+              #username="ngModel"
+              type="text"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+              style="max-width: 280px;"
+            />
+            <!-- Botón vacío para igualar espacio, pero sin mostrar -->
+            <div style="width: 20px; height: 36px;"></div>
+          </div>
+
+          @if (username.invalid && (username.touched || loginForm.submitted)) {
+            <p class="text-black text-sm mt-1">El nombre de usuario es requerido.</p>
+          }
+        </div>
+
+
+        <!-- Campo contraseña con ícono -->
+        <div class="mb-6 w-full">
+          <label class="block text-lg font-medium mb-1">Contraseña</label>
+
+          <div class="flex items-center gap-2">
+            <input
+              [type]="showPassword ? 'text' : 'password'"
+              name="password"
+              [(ngModel)]="data.password"
+              #password="ngModel"
+              class="input-fixed-width px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+
+            <button
+              type="button"
+              (click)="showPassword = !showPassword"
+              class="flex items-center justify-center h-8 w-8"
+              style="all: unset; cursor: pointer;"
+            >
+              @if (!showPassword) {
+                <img
+                  src="/assets/images/game/elements/icon-hide.png"
+                  alt="Mostrar"
+                  class="h-5 w-5 pointer-events-none"
+                />
+              } @else {
+                <img
+                  src="/assets/images/game/elements/icon-show.png"
+                  alt="Ocultar"
+                  class="h-5 w-5 pointer-events-none"
+                />
+              }
+            </button>
+          </div>
+
+          @if (password.invalid && (password.touched || loginForm.submitted)) {
+            <p class="text-black text-sm mt-1">La contraseña es requerida.</p>
+          }
+        </div>
+
+
+
+        <!-- Mensaje de error -->
+        @if (errorMessage) {
+          <p class="text-black text-center mb-4">{{ errorMessage }}</p>
+        }
+
+        <!-- Botón enviar -->
+        <div class="text-center mt-4">
+          <button type="submit" class="bg-blue-600 text-white py-2 px-4 rounded hover:bg-blue-700">
+            Entrar
+          </button>
+        </div>
+      </div>
+    </form>
+
+    <!-- Enlaces inferiores -->
+    <div class="flex justify-between items-center mt-6 text-sm">
+      <a routerLink="/forgot-password" class="text-blue-600 hover:underline cursor-pointer">¿Olvidaste tu contraseña?</a>
+      <a routerLink="/register" class="text-blue-600 hover:underline cursor-pointer">Registrarse</a>
+    </div>
+  </div>
+</main>

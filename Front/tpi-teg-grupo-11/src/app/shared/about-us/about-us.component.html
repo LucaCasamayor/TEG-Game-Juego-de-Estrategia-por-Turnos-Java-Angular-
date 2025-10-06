@@ -1,0 +1,24 @@
+
+<div [ngClass]="isModalOpen ? 'block' : 'hidden'" class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col bg-amber-100 w-2/3 h-4/5 p-10 z-50 overflow-auto rounded-xl">
+  <div class="flex justify-between items-center mb-6 border-b border-yellow-700 pb-2">
+    <h1 class="text-3xl font-bold tracking-wide select-none">About Us</h1>
+    <button (click)="onClose()"
+            class="text-yellow-700 hover:text-yellow-900 font-bold text-2xl leading-none transition-colors">
+      &times;
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <div *ngFor="let member of team" class="bg-white p-4 rounded-lg shadow-md text-center">
+      <img [src]="member.image" alt="{{ member.name }}" class="w-24 h-24 rounded-full mx-auto mb-2 object-cover" style="object-position: top" />
+      <h2 class="text-lg font-semibold">{{ member.name }}</h2>
+      <p class="text-sm text-gray-600">{{ member.description }}</p>
+    </div>
+  </div>
+
+  <div class="mt-8 text-center text-yellow-700 font-semibold tracking-wide select-none">
+    <small>© 2025 Grupo 11</small>
+  </div>
+</div>
+
+

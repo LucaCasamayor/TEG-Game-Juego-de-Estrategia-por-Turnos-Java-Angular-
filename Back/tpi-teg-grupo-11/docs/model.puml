@@ -1,0 +1,271 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+class UsersStats {
+  +userStatsId : PK
+  +userId : FK
+  --
+  gamesPlayed
+  armiesLost
+  armiesDefeated
+  territoriesConquered
+  territoriesLost
+  gamesWon
+  roundsPlayed
+  --
+  updateStats()
+}
+
+class ObjectiveTypes {
+  +objectiveTypeId : PK
+  --
+  type
+}
+
+class Objectives {
+  +idObjectives : PK
+  +objectiveTypeId : FK
+  --
+  description
+  --
+  assignPlayerObjective(player)
+  isAccomplished()
+}
+
+class Maps {
+  +mapId : PK
+  --
+  name
+}
+
+class Users {
+  +userId : PK
+  --
+  username
+  password
+  imgURL
+  isActive
+  creationDate
+  --
+  registerUser()
+  changeUsername()
+  changePassword()
+  changeAvatar()
+  deleteUser()
+}
+
+class Colors {
+  +colorId : PK
+  --
+  color
+}
+
+class PlayerTypes {
+  +playerTypeId : PK
+  --
+  description
+}
+
+class PlayersGameStats {
+  +playerGameStats : PK
+  +playerId : FK
+  --
+  armiesLost
+  armiesDefeated
+  territoriesConquered
+  territoriesLost
+  cardsTraded
+}
+
+class Regions {
+  +regionId : PK
+  +mapId : FK
+  --
+  name
+  numberArmyOfTerritories
+  --
+  calculateBonification()
+}
+
+class Players {
+  +playerId : PK
+  +gameId : FK
+  +userId : FK
+  +objectiveId : FK
+  +colorId : FK
+  +playerTypeId : FK
+  --
+  turnOrder
+  isWinner
+  lastLost
+  --
+  deployArmies(destination, n)
+  attack(origin, destination, n)
+  regroup(origin, destination, n)
+  tradeCards(cards)
+  receiveCard(card)
+  checkObjectivesStates()
+}
+
+class Games {
+  +gameId : PK
+  --
+  gameURL
+  settings
+  gameState
+  creationDate
+}
+
+class Borders {
+  +borderId : PK
+  +territoryId : FK
+  +territoryAId : FK
+  --
+  crossesRegions
+}
+
+class Territories {
+  +territoryId : PK
+  +regionId : FK
+  --
+  name
+}
+
+class TerritoriesStates {
+  +territoryState : PK
+  +gameId : FK
+  +territoryId : FK
+  +playerId : FK
+  --
+  armyCount
+  --
+  changeOwner(newOwner)
+  addArmies(n)
+  removeArmies(n)
+}
+
+class Pacts {
+  +pactId : PK
+  +playerAId : FK
+  +playerBId : FK
+  +borderId : FK
+  +isTurnId : FK
+  +endTurnId : FK
+  --
+  initiatePact(border)
+  breakPact()
+}
+
+class CardStates {
+  +cardStateId : PK
+  +cardId : FK
+  +turnId : FK
+  +playerId : FK
+  --
+  used
+  --
+  useCard()
+  dealStartingCards(player)
+  dealConquestCard(player)
+  returnCardToDeck(card)
+}
+
+class Turns {
+  +turnId : PK
+  +gameId : FK
+  +turnPhaseId : FK
+  --
+  nextPhase()
+  endTurn()
+  startTimer()
+  restartTimer()
+  pauseTimer()
+}
+
+class Cards {
+  +cardId : PK
+  +territoryId : FK
+  +symbolId : FK
+  --
+  validTrade(card1, card2)
+}
+
+class Symbols {
+  +symbolId : PK
+  --
+  symbol
+  imgURL
+}
+
+class Movements {
+  +turnId : PK
+  +startTerritoryId : FK
+  +endTerritoryId : FK
+  --
+  armyCount
+}
+
+class Dices {
+  +diceId : PK
+  +attackId : FK
+  --
+  attackerDice
+  defenderDice
+}
+
+class SavedGames {
+  +idSavedGames : PK
+  +gameStateId : FK
+  --
+  code
+}
+
+class GamesStates {
+  +gameStateId : PK
+  +turnId : FK
+  --
+  date
+}
+
+class TurnPhases {
+  +turnPhaseId : PK
+  --
+  description
+}
+
+' ----------- RELACIONES -----------
+UsersStats --> Users : userId
+Objectives --> ObjectiveTypes : objectiveTypeId
+Players --> Games : gameId
+Players --> Users : userId
+Players --> Objectives : objectiveId
+Players --> Colors : colorId
+Players --> PlayerTypes : playerTypeId
+PlayersGameStats --> Players : playerId
+Regions --> Maps : mapId
+Territories --> Regions : regionId
+TerritoriesStates --> Games : gameId
+TerritoriesStates --> Territories : territoryId
+TerritoriesStates --> Players : playerId
+Pacts --> Players : playerAId
+Pacts --> Players : playerBId
+Pacts --> Borders : borderId
+Pacts --> Turns : isTurnId
+Pacts --> Turns : endTurnId
+CardStates --> Cards : cardId
+CardStates --> Turns : turnId
+CardStates --> Players : playerId
+Turns --> Games : gameId
+Turns --> TurnPhases : turnPhaseId
+Cards --> Territories : territoryId
+Cards --> Symbols : symbolId
+Movements --> Territories : startTerritoryId
+Movements --> Territories : endTerritoryId
+Dices --> Cards : attackId
+SavedGames --> GamesStates : gameStateId
+GamesStates --> Turns : turnId
+Borders --> Territories : territoryId
+Borders --> Territories : territoryAId
+
+@enduml

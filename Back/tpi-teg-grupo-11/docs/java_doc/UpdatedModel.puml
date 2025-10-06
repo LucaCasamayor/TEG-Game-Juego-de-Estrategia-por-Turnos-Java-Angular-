@@ -1,0 +1,349 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+class Achievement {
+  +achievementId : PK
+  --
+  name
+  description
+  imageUrl
+  --
+  getAchievementById(id)
+  getAllAchievements()
+  getAchievementByName(name)
+  postAchievement(AchievementDto)
+}
+
+class AICharacter {
+  +characterId : PK
+  --
+  name
+  imageUrl
+  profile
+  description
+  --
+  getAll()
+  getById(id)
+  getAllByProfile(AIprofile)
+}
+
+class Card {
+  +cardId : PK
+  --
+  territory : FK
+  symbol : FK
+  --
+  getAll()
+  getById(id)
+}
+
+class CardState {
+  +cardStateId : PK
+  --
+  card : FK
+  game : FK
+  player : FK
+  wasUsed : boolean
+  --
+  getAll()
+  useCard(id)
+  dealStartingCards(playerdto)
+  dealConquestCard(playerdto)
+}
+
+class Dice {
+  +diceId : PK
+  --
+  attackId : FK
+  attackerDice
+  defenderDice
+  movement : FK
+  --
+  getById(id)
+}
+
+class Game {
+  +gameId : PK
+  --
+  settings : FK
+  creationDate
+  gameState
+  players
+  turns
+  cardStates
+  pacts
+  globalPacts
+  --
+  loadGame(id)
+  createGame(game)
+  actualizarEstadoPartida(gamedto, gameid)
+}
+
+class GameMap {
+  +id : PK
+  --
+  name
+  territories
+  --
+  getAllMaps()
+  getMapById(id)
+}
+
+class GlobalPact {
+  +globalPactId : PK
+  --
+  player1 : FK
+  player2 : FK
+  game : FK
+  isActive
+  --
+  getAllGlobalPacts()
+  getGlobalPactByPlayer(Player)
+  createGlobalPact(globalPactDto)
+  updateGlobalPact(globalPactDto)
+}
+
+class Movement {
+  +id : PK
+  --
+  turn : FK
+  startTerritoryId : FK
+  endTerritoryId : FK
+  armyCount
+  --
+  getAllByGame(gameId)
+  getMovementById(id)
+  saveMovement(movementDto)
+}
+
+class Objective {
+  +id : PK
+  --
+  description
+  objectiveType : FK
+  color
+  firstRegionTerritoriesNeeded
+  secondRegionTerritoriesNeeded
+  thirdRegionTerritoriesNeeded
+  fourthRegionTerritoriesNeeded
+  fifthRegionTerritoriesNeeded
+  --
+  getAll()
+  getByObjectiveTypes(objectiveTypes)
+  getById(id)
+}
+
+class ObjectiveType {
+  +objectiveTypeId : PK
+  --
+  name
+  --
+  getAll()
+  getById(id)
+}
+
+class Pact {
+  +pactId : PK
+  --
+  player1 : FK
+  player2 : FK
+  game : FK
+  isActive
+  --
+  getAllGamePacts(gameId)
+  getPactsByTerritory(territoryId)
+  updatePact(pactId, pactDto)
+}
+
+class Player {
+  +playerId : PK
+  --
+  game : FK
+  user : FK
+  objective : FK
+  playerColor
+  turnOrder
+  isWinner
+  hasLost
+  playerType : FK
+  territories
+  --
+  attack(attackRequestDto)
+  deploy(deployRequestDto)
+  fortify(attackRequestDto)
+}
+
+class PlayerGameStats {
+  +playerGameStatsId : PK
+  --
+  player : FK
+  armiesHad
+  armiesLost
+  armiesDefeated
+  territoriesConquered
+  territoriesLost
+  cardsTraded
+  --
+  addPlayerGameStats(PlayerGameStatsDto)
+  getPlayerGameStatsById(id)
+  getAllPlayerGameStats()
+  updatePlayerGameStats(id, PlayerGameStatsDto)
+  deletePlayerGameStats(id)
+}
+
+class Region {
+  +id : PK
+  --
+  name
+  numberOfTerritories
+  map : FK
+  territories
+  --
+  getById(id)
+  getByMapId(mapId)
+}
+
+class Settings {
+  +settingsId : PK
+  --
+  turnTime
+  map : FK
+  aiProfile
+  objectiveTypes
+  password
+  isPrivate
+  --
+  getSettingsById(id)
+  saveSettings(settingsDto)
+}
+
+class Symbol {
+  +symbolId : PK
+  --
+  symbol
+  img
+  --
+  addSymbol(SymbolDto)
+  getAllSymbols()
+  getSymbolById(id)
+}
+
+class Territory {
+  +territoryId : PK
+  --
+  name
+  xCoordinate
+  yCoordinate
+  region : FK
+  borders
+  --
+  getAllByMapId(mapId)
+  getAllByRegionId(regionId)
+  getById(id)
+}
+
+class TerritoryState {
+  +territoryStateId : PK
+  --
+  turn : FK
+  territory : FK
+  player : FK
+  armyCount
+  --
+  getByPlayer(id)
+  getByTurn(id)
+  create(TerritoryStateDto)
+  update(id, TerritoryStateDto)
+  delete(id)
+}
+
+class Turn {
+  +turnId : PK
+  --
+  game : FK
+  turnPhase
+  movements
+  territoryStates
+  --
+  // métodos en desarrollo
+}
+
+class User {
+  +idUser : PK
+  --
+  username
+  password
+  imgUrl
+  active
+  creationDate
+  --
+  login(username, password)
+  register(UserDto)
+  update(id, userDto)
+}
+
+class UserAchievement {
+  +userAchievementID : PK
+  --
+  user : FK
+  achievement : FK
+  date
+  --
+  getUserAchievementById(id)
+  postUserAchievement(UserAchievementDto)
+}
+
+class UserStats {
+  +id : PK
+  --
+  user : FK
+  armiesHad
+  armiesLost
+  armiesDefeated
+  territoriesConquered
+  territoriesLost
+  gamesPlayed
+  gamesWon
+  roundsPlayed
+  --
+  addUserStats(userStatsDto)
+  getUserStatsById(id)
+  getAllUserStats()
+  updateUserStats(id, userStatsDto)
+}
+
+' ----------- RELACIONES -----------
+Card --> Territory : territory (objeto)
+Card --> Symbol : symbol (objeto)
+CardState --> Card : card (objeto)
+CardState --> Game : game (objeto)
+CardState --> Player : player (objeto)
+Dice --> Movement : movement (objeto)
+Game --> Settings : settings (objeto)
+GlobalPact --> Player : player1 (objeto)
+GlobalPact --> Player : player2 (objeto)
+GlobalPact --> Game : game (objeto)
+Movement --> Turn : turn (objeto)
+Movement --> Territory : startTerritoryId (por id)
+Movement --> Territory : endTerritoryId (por id)
+Objective --> ObjectiveType : objectiveType (objeto)
+Pact --> Player : player1 (objeto)
+Pact --> Player : player2 (objeto)
+Pact --> Game : game (objeto)
+Player --> Game : game (objeto)
+Player --> User : user (objeto)
+Player --> Objective : objective (objeto)
+Player --> PlayerGameStats : playerGameStats (objeto indirecto)
+PlayerGameStats --> Player : player (objeto)
+Region --> GameMap : map (objeto)
+Settings --> GameMap : map (objeto)
+Territory --> Region : region (objeto)
+TerritoryState --> Turn : turn (objeto)
+TerritoryState --> Territory : territory (objeto)
+TerritoryState --> Player : player (objeto)
+Turn --> Game : game (objeto)
+UserAchievement --> User : user (objeto)
+UserAchievement --> Achievement : achievement (objeto)
+UserStats --> User : user (objeto)
+@enduml

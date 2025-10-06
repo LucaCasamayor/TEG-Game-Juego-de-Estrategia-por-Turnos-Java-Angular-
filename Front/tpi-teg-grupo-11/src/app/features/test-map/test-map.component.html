@@ -1,0 +1,79 @@
+<div class="w-full h-full relative flex justify-center items-center pb-10">
+  <svg
+    class="w-full h-auto max-w-full max-h-full"
+    [attr.viewBox]="'0 0 ' + svgSize.width + ' ' + svgSize.height"
+    preserveAspectRatio="xMidYMid meet">
+    <defs>
+      <pattern id="oceano" patternUnits="userSpaceOnUse" [attr.width]="svgSize.width" [attr.height]="svgSize.height">
+        <image href="assets/images/game/map-background.png" x="0" y="0"
+               [attr.width]="svgSize.width"
+               [attr.height]="svgSize.height" />
+      </pattern>
+    </defs>
+
+    <rect
+      x="0"
+      y="0"
+      [attr.width]="svgSize.width"
+      [attr.height]="svgSize.height"
+      fill="url(#oceano)" />
+
+    @for (country of countries; track $index) {
+      <g>
+        <!-- Territorio -->
+        <path
+          [attr.id]="country.name"
+          [attr.d]="country.figure"
+          [attr.fill]="country.fill"
+          [attr.stroke]="country.stroke"
+          [attr.stroke-width]="country.strokeWidth || 1"
+          [attr.opacity]="country.opacity"
+          (click)="countryClick(country.id)"
+          (mouseenter)="country.opacity = '0.8'; showTooltip($event, country.name, country.regionName)"
+          (mouseleave)="country.opacity = '1'; hideTooltip()">
+        </path>
+
+        <!-- Círculo del ejército -->
+        @if (country.armyCount > 0 && country.cx && country.cy) {
+          <circle
+            [attr.cx]="country.cx"
+            [attr.cy]="country.cy"
+            r="12"
+            fill="black"
+            stroke="black"
+            stroke-width="1" />
+        }
+
+        <!-- Texto con número de tropas -->
+        @if (country.armyCount > 0 && country.cx && country.cy) {
+          <text
+            [attr.x]="country.cx"
+            [attr.y]="country.cy"
+            text-anchor="middle"
+            dominant-baseline="middle"
+            font-size="12"
+            font-weight="bold"
+            fill="white">
+            {{ country.armyCount }}
+          </text>
+        }
+      </g>
+    }
+  </svg>
+
+  <!-- Tooltip HTML -->
+  @if (showTooltipFlag) {
+    <div
+      class="absolute text-black p-2 rounded shadow text-sm border border-black"
+      [ngStyle]="{
+        'left.px': tooltipX + 10,
+        'top.px': tooltipY + 10,
+        'position': 'fixed',
+        'z-index': 1000,
+        'background-color': tooltipBackgroundColor
+      }">
+      <div class="font-bold">{{ tooltipCountryName }}</div>
+      <div class="text-xs">{{ tooltipRegion }}</div>
+    </div>
+  }
+</div>

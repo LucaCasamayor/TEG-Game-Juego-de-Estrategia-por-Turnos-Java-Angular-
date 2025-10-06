@@ -1,0 +1,40 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Tagesschrift&family=Tuffy:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+@import "tailwindcss";
+
+body {
+  font-family: 'Tuffy', sans-serif;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: url("../public/assets/images/game/world.png") no-repeat center center / cover;
+  z-index: -1;
+}
+
+
+/* o */
+h1, h2, h3, a, p, button, label {
+  font-family: 'Tagesschrift', cursive;
+}
+
+h1 {
+  color: #4c2700;
+}
+
+button {
+  color: #4c2700;
+  cursor: pointer;
+  margin: 10px;
+  padding: .7rem 1.5rem;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5));
+  background: url("../public/assets/images/game/elements/button.png") no-repeat center center / cover;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
